@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misión Amor: Kenia & Francisco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nivel 0: Intro / Bienvenida -->
+  <div id="screen-intro" class="screen active">
+    <div class="card glass">
+      <div class="badge-level">Nivel 0: Inicio</div>
+      <h1>Misión Amor 💖</h1>
+      <h2>El Viaje de Kenia & Francisco</h2>
+      <p>Hola Kenia. Para desbloquear tu regalo especial y llegar al Certificado de Amor Final, debes superar 3 divertidas pruebas didácticas.</p>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="intro-progress" style="width: 0%"></div>
+      </div>
+      <p class="small-text">Progreso actual: 0/3 pruebas completadas</p>
+
+      <button class="btn" onclick="goToScreen('screen-level1')">¡Comenzar la Misión!</button>
+    </div>
+  </div>
+
+  <!-- Nivel 1: Quiz de Cómplices -->
+  <div id="screen-level1" class="screen">
+    <div class="card glass">
+      <div class="badge-level">Nivel 1: Trivia de Cómplices</div>
+      <h2>Reúne los 3 Fragmentos de Corazón</h2>
+      <p>Demuestra qué tanto recuerdas de nuestra historia respondiendo estas 3 preguntas clave:</p>
+      
+      <div class="quiz-box">
+        <!-- Q1 -->
+        <div class="q-group" id="q1">
+          <label>1. ¿Cuál es nuestra fecha especial (día-mes)?</label>
+          <div class="options">
+            <button onclick="checkAnswer(1, '14-02', false)">14-02</button>
+            <button onclick="checkAnswer(1, '11-02', true)">11-02</button>
+            <button onclick="checkAnswer(1, '25-12', false)">25-12</button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="q-group hidden" id="q2">
+          <label>2. ¿Cuál es el nombre clave / combinado del equipo?</label>
+          <div class="options">
+            <button onclick="checkAnswer(2, 'FranNia', false)">FranNia</button>
+            <button onclick="checkAnswer(2, 'Frania', true)">Frania</button>
+            <button onclick="checkAnswer(2, 'KenCisco', false)">KenCisco</button>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="q-group hidden" id="q3">
+          <label>3. ¿Cómo se llama nuestro hijo / peludito especial?</label>
+          <div class="options">
+            <button onclick="checkAnswer(3, 'Firulais', false)">Firulais</button>
+            <button onclick="checkAnswer(3, 'Rocky', false)">Rocky</button>
+            <button onclick="checkAnswer(3, 'Scary', true)">Scary 🐶</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="heart-pieces">
+        <span id="p1" class="piece">💔</span>
+        <span id="p2" class="piece">💔</span>
+        <span id="p3" class="piece">💔</span>
+      </div>
+
+      <button id="btn-next1" class="btn hidden" onclick="goToScreen('screen-level2')">¡Siguiente Nivel! ➔</button>
+    </div>
+  </div>
+
+  <!-- Nivel 2: Minijuego Canvas -->
+  <div id="screen-level2" class="screen">
+    <div class="card glass game-card">
+      <div class="badge-level">Nivel 2: Desafío de Agilidad</div>
+      <h2>¡Atrapa 10 Corazones!</h2>
+      <p>Mueve la canasta con el mouse o arrastrando con el dedo para recolectar el amor antes de que caigan al suelo.</p>
+      
+      <div class="stats-bar">
+        <span>Score: <b id="score">0</b>/10</span>
+        <span>Tiempo: <b id="timer">20</b>s</span>
+      </div>
+
+      <div class="canvas-wrapper">
+        <canvas id="gameCanvas" width="340" height="380"></canvas>
+      </div>
+
+      <button id="btn-start2" class="btn" onclick="startGame()">¡Empezar Juego!</button>
+      <button id="btn-next2" class="btn hidden" onclick="goToScreen('screen-level3')">¡Superado! Ir al Nivel 3 ➔</button>
+    </div>
+  </div>
+
+  <!-- Nivel 3: Ruleta de Vales -->
+  <div id="screen-level3" class="screen">
+    <div class="card glass">
+      <div class="badge-level">Nivel 3: Gran Recompensa</div>
+      <h2>Gira la Ruleta de Vales</h2>
+      <p>Descubre qué premio especial has ganado para canjear con Francisco:</p>
+
+      <div class="wheel-container">
+        <div class="wheel-pointer">▼</div>
+        <div class="wheel" id="wheel">
+          <div class="sec" style="--i:1; --clr:#ff758c;">Cena Romántica 🍷</div>
+          <div class="sec" style="--i:2; --clr:#ff7eb3;">Masaje Relajante 💆‍♀️</div>
+          <div class="sec" style="--i:3; --clr:#fa709a;">Noche de Pelis 🍿</div>
+          <div class="sec" style="--i:4; --clr:#fee140;">Vale de Postre 🍦</div>
+          <div class="sec" style="--i:5; --clr:#ff9a9e;">Paseo Sorpresa 🚗</div>
+          <div class="sec" style="--i:6; --clr:#fecfef;">Día de Engreimiento 👑</div>
+        </div>
+      </div>
+
+      <button id="btn-spin" class="btn" onclick="spinWheel()">¡Girar Ruleta!</button>
+      <div id="wheel-result" class="result-box hidden"></div>
+      
+      <button id="btn-next3" class="btn hidden" onclick="goToScreen('screen-final')">¡Reclamar Certificado Final! 🎉</button>
+    </div>
+  </div>
+
+  <!-- Nivel Final: Certificado de Amor -->
+  <div id="screen-final" class="screen">
+    <div class="card glass cert-card">
+      <div class="cert-border">
+        <span class="stamp">OFICIAL</span>
+        <h1>Certificado de Amor Eterno</h1>
+        <p class="subtitle">Concedido con todo el corazón a:</p>
+        <h2 class="hero-name">Kenia</h2>
+        <p class="cert-text">
+          Por haber superado exitosamente la <b>Misión Amor</b>, demostrando que nuestro equipo <b>Frania</b> es invencible desde aquel <b>11-02</b>.
+        </p>
+        <p class="cert-text">
+          Junto a nuestro amado <b>Scary 🐶</b>, Quiero aclarar que eres el amor de mi vida y mi compañera favorita en todas las aventuras. siempre Juntos hasta el final, estos meses seran muchisisismo mejor.
+        </p>
+        
+        <div class="prize-tag" id="cert-prize">Premio Canjeable: ¡Tu recompensa de la ruleta!</div>
+
+        <div class="signatures">
+          <div class="sig">
+            <span class="sig-line">Francisco</span>
+            <small>Firma del Esposo (espeso)</small>
+          </div>
+          <div class="sig">
+            <span class="sig-line">Scary 🐾</span>
+            <small>Visto Bueno Peludo</small>
+          </div>
+        </div>
+
+        <button class="btn gold-btn" onclick="launchCelebration()">¡Celebrar nuestro Amor! 🎉💖</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
